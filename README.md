@@ -13,7 +13,11 @@ Overly-simple map in C.
 &nbsp;&nbsp;&nbsp;&nbsp;&bull; [Limitations](#limitations)  
 &nbsp;&nbsp;&nbsp;&nbsp;&bull; [API](#api)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; [Types](#types)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; [ezmap_t](#ezmap_t)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; [Functions](#functions)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; [ezmap_create](#ezmap_create)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; [ezmap_add](#ezmap_add)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; [ezmap_lookup](#ezmap_lookup)  
 &nbsp;&nbsp;&nbsp;&nbsp;&bull; [Usage Example](#usage-example)  
 &nbsp;&nbsp;&nbsp;&nbsp;&bull; [Building](#building)  
 &nbsp;&nbsp;&nbsp;&nbsp;&bull; [License](#license)  
@@ -67,16 +71,22 @@ and that the remaining bytes in the array are cleared.
 
 ### Types
 
+#### ezmap_t
+
 ```c
 typedef struct ezmap ezmap_t;
 ```
 
 ### Functions
 
+#### ezmap_create
+
 ```c
 ezmap_t* ezmap_create();
 ```
 Creates a new empty map. Returns NULL on error.
+
+#### ezmap_add
 
 ```c
 int ezmap_add(ezmap_t* map, void* key, void* value);
@@ -87,6 +97,8 @@ Caller is responsible for zero-padding key array.
 - Returns 0 on success
 - Returns -1 on error (NULL parameters or memory allocation failure)
 - Overwrites existing values for duplicate keys
+
+#### ezmap_lookup
 
 ```c
 void* ezmap_lookup(ezmap_t* map, void* key);
