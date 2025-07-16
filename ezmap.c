@@ -1,4 +1,4 @@
-/* ezmap.c - Error handling infrastructure.
+/* ezmap.c - Simple low-performance map structure.
  * See https://github.com/fordsfords/ezmap for documentation.
  *
  * This code and its documentation is Copyright 2025, 2025 Steven Ford,
