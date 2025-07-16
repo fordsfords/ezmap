@@ -51,7 +51,7 @@ for their environment (C++ STL, Boost, etc.).
 
 ## Limitations
 
-- **Performance**: Uses a simple linked list - O(n) operations
+- **Low Performance**: Uses a simple linked list - O(n) operations
 - **No deletion**: Cannot remove individual entries
 - **No iteration**: Cannot walk through all entries
 - **No cleanup**: Map persists for program lifetime
