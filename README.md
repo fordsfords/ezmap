@@ -24,12 +24,17 @@ Overly-simple map in C.
 ## Introduction
 
 A minimal map implementation for C applications that need basic key-value storage with binary keys.
+Not intended for production use.
+
+Thanks to Claude.ai for assisting with the code and documentation for this module.
 
 ## Purpose
 
 This module provides a simple map data structure for C programs that need to store key-value pairs
 where keys are binary data (not null-terminated strings).
-It's designed primarily for demonstration purposes in example applications.
+It's designed primarily for demonstration purposes in example C applications where there is no
+widely-accepted standard map available.
+I expect you to discard this map module and replace it with your favorite production-level map.
 
 **Important**: This is a simple implementation with poor performance,
 intended for examples and prototypes.
@@ -52,6 +57,11 @@ for their environment (C++ STL, Boost, etc.).
 - **No cleanup**: Map persists for program lifetime
 - **Single-threaded**: No thread safety mechanisms
 - **Fixed key size**: All keys must be exactly `EZMAP_KEY_SIZE` bytes
+
+Regarding fixed key sizes, you are more than welcome to use
+variable-length strings as keys so long as they fit within
+`EZMAP_KEY_SIZE` bytes (including final null)
+and that the remaining bytes in the array are cleared.
 
 ## API
 
