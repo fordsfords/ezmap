@@ -91,6 +91,48 @@ void test1() {
 
 
 void test2() {
+  ezmap_t* map = ezmap_create(); ASSRT(map != NULL);
+  int err;
+
+  char key1[EZMAP_KEY_SIZE] = {0x01, 0x02, 0x03, 0x04};
+  char *str_value = "first value";
+  err = ezmap_add(map, key1, str_value);  ASSRT(err == 0);
+
+  char key2[EZMAP_KEY_SIZE] = {0x05, 0x06, 0x07};
+  int int_value = 42;
+  err = ezmap_add(map, key2, &int_value);  ASSRT(err == 0);
+
+  char key3[EZMAP_KEY_SIZE] = {0x08, 0x09, 0x0A};
+  char *str_value2 = "third value";
+  err = ezmap_add(map, key3, str_value2);  ASSRT(err == 0);
+
+  /* Delete middle item */
+  int *del_result = (int *)ezmap_delete(map, key2);  ASSRT(del_result != NULL);
+  ASSRT(*del_result == int_value);
+
+  /* Verify it's gone */
+  void *lookup_result = ezmap_lookup(map, key2);  ASSRT(lookup_result == NULL);
+
+  /* Verify other items still exist */
+  char *str_result = (char *)ezmap_lookup(map, key1);  ASSRT(str_result != NULL);
+  ASSRT(strcmp(str_value, str_result) == 0);
+
+  str_result = (char *)ezmap_lookup(map, key3);  ASSRT(str_result != NULL);
+  ASSRT(strcmp(str_value2, str_result) == 0);
+
+  /* Delete first item */
+  char *del_str = (char *)ezmap_delete(map, key1);  ASSRT(del_str != NULL);
+  ASSRT(strcmp(str_value, del_str) == 0);
+  lookup_result = ezmap_lookup(map, key1);  ASSRT(lookup_result == NULL);
+
+  /* Delete last item */
+  del_str = (char *)ezmap_delete(map, key3);  ASSRT(del_str != NULL);
+  ASSRT(strcmp(str_value2, del_str) == 0);
+  lookup_result = ezmap_lookup(map, key3);  ASSRT(lookup_result == NULL);
+
+  /* Try to delete non-existent key */
+  char key4[EZMAP_KEY_SIZE] = {0x0B, 0x0C, 0x0D};
+  void *del_missing = ezmap_delete(map, key4);  ASSRT(del_missing == NULL);
 }  /* test2 */
 
 
@@ -104,7 +146,7 @@ int main(int argc, char **argv) {
 
   if (o_testnum == 0 || o_testnum == 2) {
     test2();
-    printf("test1: success\n");
+    printf("test2: success\n");
   }
 
   return 0;

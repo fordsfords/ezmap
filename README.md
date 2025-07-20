@@ -18,6 +18,7 @@ Overly-simple map in C.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; [ezmap_create](#ezmap_create)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; [ezmap_add](#ezmap_add)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; [ezmap_lookup](#ezmap_lookup)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; [ezmap_delete](#ezmap_delete)  
 &nbsp;&nbsp;&nbsp;&nbsp;&bull; [Usage Example](#usage-example)  
 &nbsp;&nbsp;&nbsp;&nbsp;&bull; [Building](#building)  
 &nbsp;&nbsp;&nbsp;&nbsp;&bull; [License](#license)  
@@ -30,7 +31,7 @@ Overly-simple map in C.
 A minimal map implementation for C applications that need basic key-value storage with binary keys.
 Not intended for production use.
 
-Thanks to Claude.ai for assisting with the code and documentation for this module.
+Thanks to Claude.ai for doing most of the work on the code and documentation for this module.
 
 ## Purpose
 
@@ -50,13 +51,13 @@ for their environment (C++ STL, Boost, etc.).
 - **Binary keys**: Keys are fixed-size byte arrays, not strings
 - **Pointer values**: Values are void pointers to your data
 - **Key overwriting**: Adding an existing key updates its value
-- **Simple API**: Create, add, lookup - that's it
+- **Key deletion**: Remove entries and reclaim their memory
+- **Simple API**: Create, add, lookup, delete - that's it
 - **No dependencies**: Uses only standard C library functions
 
 ## Limitations
 
 - **Low Performance**: Uses a simple linked list - O(n) operations
-- **No deletion**: Cannot remove individual entries
 - **No iteration**: Cannot walk through all entries
 - **No cleanup**: Map persists for program lifetime
 - **Single-threaded**: No thread safety mechanisms
@@ -107,6 +108,16 @@ Retrieves the value associated with a key.
 - Returns the value pointer on success
 - Returns NULL if key not found or on error
 
+#### ezmap_delete
+
+```c
+void* ezmap_delete(ezmap_t* map, void* key);
+```
+Removes a key-value pair from the map and frees the node memory.
+- Returns the value pointer of the deleted entry on success
+- Returns NULL if key not found or on error (NULL parameters)
+- The returned value pointer remains valid after deletion
+
 ## Usage Example
 
 ```c
@@ -128,6 +139,12 @@ int main() {
   /* Lookup entries */
   char* result1 = (char*)ezmap_lookup(map, key1);
   int* result2 = (int*)ezmap_lookup(map, key2);
+
+  /* Delete entry */
+  char* deleted_value = (char*)ezmap_delete(map, key1);
+  if (deleted_value != NULL) {
+    /* Key was found and deleted, deleted_value contains the original value */
+  }
 
   return 0;
 }

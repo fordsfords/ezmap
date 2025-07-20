@@ -66,3 +66,31 @@ void* ezmap_lookup(ezmap_t* map, void* key) {
 
   return NULL;  /* Key not found. */
 }  /* ezmap_lookup */
+
+
+void* ezmap_delete(ezmap_t* map, void* key) {
+  if (map == NULL || key == NULL) { return NULL; }  /* Handle error. */
+
+  ezmap_node_t* current = map->head;
+  ezmap_node_t* prev = NULL;
+
+  while (current != NULL) {
+    if (memcmp(current->key, key, EZMAP_KEY_SIZE) == 0) {
+      void* value = current->value;
+
+      /* Remove node from list */
+      if (prev == NULL) {
+        map->head = current->next;  /* Deleting first node */
+      } else {
+        prev->next = current->next;
+      }
+
+      free(current);
+      return value;  /* Return deleted value */
+    }
+    prev = current;
+    current = current->next;
+  }
+
+  return NULL;  /* Key not found. */
+}  /* ezmap_delete */

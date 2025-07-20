@@ -34,6 +34,7 @@ typedef struct ezmap {
 ezmap_t* ezmap_create();
 int ezmap_add(ezmap_t* map, void* key, void* value);
 void* ezmap_lookup(ezmap_t* map, void* key);
+void* ezmap_delete(ezmap_t* map, void* key);
 
 
 #if defined(__cplusplus)
