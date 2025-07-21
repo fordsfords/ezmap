@@ -27,7 +27,7 @@ ezmap_t* ezmap_create() {
 }  /* ezmap_create */
 
 
-int ezmap_add(ezmap_t* map, void* key, void* value) {
+int ezmap_add(ezmap_t* map, const void* key, void* value) {
   if (map == NULL || key == NULL) { return -1; }  /* Handle error. */
 
   /* Check if key already exists */
@@ -53,7 +53,7 @@ int ezmap_add(ezmap_t* map, void* key, void* value) {
 }  /* ezmap_add */
 
 
-void* ezmap_lookup(ezmap_t* map, void* key) {
+void* ezmap_lookup(ezmap_t* map, const void* key) {
   if (map == NULL || key == NULL) { return NULL; }  /* Handle error. */
 
   ezmap_node_t* current = map->head;
@@ -68,7 +68,7 @@ void* ezmap_lookup(ezmap_t* map, void* key) {
 }  /* ezmap_lookup */
 
 
-void* ezmap_delete(ezmap_t* map, void* key) {
+void* ezmap_delete(ezmap_t* map, const void* key) {
   if (map == NULL || key == NULL) { return NULL; }  /* Handle error. */
 
   ezmap_node_t* current = map->head;

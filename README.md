@@ -90,7 +90,7 @@ Creates a new empty map. Returns NULL on error.
 #### ezmap_add
 
 ```c
-int ezmap_add(ezmap_t* map, void* key, void* value);
+int ezmap_add(ezmap_t* map, const void* key, void* value);
 ```
 
 Adds or updates a key-value pair. Key must be exactly `EZMAP_KEY_SIZE` bytes.
@@ -102,7 +102,7 @@ Caller is responsible for zero-padding key array.
 #### ezmap_lookup
 
 ```c
-void* ezmap_lookup(ezmap_t* map, void* key);
+void* ezmap_lookup(ezmap_t* map, const void* key);
 ```
 Retrieves the value associated with a key.
 - Returns the value pointer on success
@@ -111,7 +111,7 @@ Retrieves the value associated with a key.
 #### ezmap_delete
 
 ```c
-void* ezmap_delete(ezmap_t* map, void* key);
+void* ezmap_delete(ezmap_t* map, const void* key);
 ```
 Removes a key-value pair from the map and frees the node memory.
 - Returns the value pointer of the deleted entry on success
